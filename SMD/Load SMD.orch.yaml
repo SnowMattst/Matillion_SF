@@ -1,0 +1,118 @@
+type: "orchestration"
+version: "1.0"
+pipeline:
+  components:
+    Start:
+      type: "start"
+      transitions:
+        unconditional:
+        - "Excel Query"
+        - "Google Sheets Query"
+      parameters:
+        componentName: "Start"
+    Excel Query:
+      type: "excel-query"
+      transitions:
+        success:
+        - "And"
+      parameters:
+        componentName: "Excel Query"
+        basicAdvancedMode: "Basic"
+        storageType: "Amazon S3 Storage"
+        storageUrl: "s3://matillion-docs/Attachments/academy/socialmediadata.xlsx"
+        containsHeaderRow: "Yes"
+        cellRange:
+        connectionOptions:
+        dataSource: "posts"
+        dataSelection:
+        - "Likes"
+        - "PostID"
+        - "PostTitle"
+        - "RowId"
+        - "UserID"
+        dataSourceFilter:
+        combineFilters: "And"
+        limit:
+        type: "Standard"
+        primaryKeys:
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "load new table Post"
+        stage: "[Custom]"
+        stagePlatform: "Snowflake Managed"
+        loadOptions:
+        autoDebug: "Off"
+    Google Sheets Query:
+      type: "google-sheets-query"
+      transitions:
+        success:
+        - "And"
+      parameters:
+        componentName: "Google Sheets Query"
+        basicAdvancedMode: "Basic"
+        authentication: "Gsheet1"
+        spreadsheetName: "SocialMediaData"
+        containsHeaderRow: "Yes"
+        cellRange:
+        connectionOptions:
+        dataSource: "SocialMediaData_users"
+        dataSelection:
+        - "Country"
+        - "id"
+        - "UserID"
+        - "UserName"
+        dataSourceFilter:
+        combineFilters: "And"
+        limit: "100"
+        type: "Standard"
+        primaryKeys:
+        warehouse1: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "load new table Users"
+        stage1: "[Custom]"
+        stagePlatform: "Snowflake Managed"
+        loadOptions:
+        autoDebug: "Off"
+    And:
+      type: "and"
+      transitions:
+        unconditional:
+        - "Run Transformation"
+      parameters:
+        componentName: "And"
+    Run Transformation:
+      type: "run-transformation"
+      parameters:
+        componentName: "Run Transformation"
+        transformationJob: "SMD/Curated"
+        setScalarVariables:
+        setGridVariables:
+design:
+  components:
+    Start:
+      position:
+        x: -1220
+        "y": -80
+      tempMetlId: 1
+    Excel Query:
+      position:
+        x: -1070
+        "y": -80
+      tempMetlId: 2
+    Google Sheets Query:
+      position:
+        x: -1070
+        "y": 20
+      tempMetlId: 5
+    And:
+      position:
+        x: -880
+        "y": -80
+      tempMetlId: 6
+    Run Transformation:
+      position:
+        x: -760
+        "y": -80
+      tempMetlId: 7

@@ -1,0 +1,90 @@
+type: "orchestration"
+version: "1.0"
+pipeline:
+  components:
+    Start:
+      type: "start"
+      transitions:
+        unconditional:
+        - "Excel Query"
+      parameters:
+        componentName: "Start"
+    Excel Query:
+      type: "excel-query"
+      parameters:
+        componentName: "Excel Query"
+        basicAdvancedMode: "Basic"
+        storageType: "Amazon S3 Storage"
+        storageUrl: "s3://matillion-docs/Attachments/academy/socialmediadata.xlsx"
+        containsHeaderRow: "Yes"
+        cellRange:
+        connectionOptions:
+        dataSource: "posts"
+        dataSelection:
+        - "Likes"
+        - "PostID"
+        - "PostTitle"
+        - "RowId"
+        - "UserID"
+        dataSourceFilter:
+        combineFilters: "And"
+        limit:
+        type: "Standard"
+        primaryKeys:
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "SMD_posts"
+        stage: "[Custom]"
+        stagePlatform: "Snowflake Managed"
+        loadOptions:
+        autoDebug: "Off"
+    Python Pushdown:
+      type: "python-pushdown"
+      parameters:
+        componentName: "Python Pushdown"
+        externalAccessIntegrations:
+        packages:
+        scriptLocation: "Component"
+        pythonScript: |
+          ###
+          # Variables are directly accessible:
+          #   print (myvar)
+          # Updating a variable:
+          #   context.updateVariable('myvar', 'new-value')
+          # Updating a grid variable:
+          #   context.updateGridVariable('mygridvar',[['list','of'],['lists','!']])
+          ###)
+        scriptTimeout: "360"
+    File Iterator:
+      type: "file-iterator"
+      parameters:
+        componentName: "File Iterator"
+        inputDataType:
+        maxIterations: "25"
+        filterRegex: ".*"
+        concurrency: "Sequential"
+        variables:
+        breakOnFailure: "No"
+design:
+  components:
+    Start:
+      position:
+        x: -150
+        "y": 0
+      tempMetlId: 1
+    Excel Query:
+      position:
+        x: -20
+        "y": 0
+      tempMetlId: 2
+    Python Pushdown:
+      position:
+        x: 360
+        "y": 0
+      tempMetlId: 3
+    File Iterator:
+      position:
+        x: 160
+        "y": 10
+      tempMetlId: 4

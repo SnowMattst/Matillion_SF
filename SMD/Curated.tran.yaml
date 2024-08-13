@@ -1,0 +1,109 @@
+type: "transformation"
+version: "1.0"
+pipeline:
+  components:
+    Posts:
+      type: "table-input"
+      parameters:
+        componentName: "Posts"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "load new table Post"
+        columnNames:
+        - "Likes"
+        - "PostID"
+        - "PostTitle"
+        - "RowId"
+        - "UserID"
+        timeOffset:
+    Convert Type:
+      type: "convert-type"
+      sources:
+      - "Posts"
+      parameters:
+        componentName: "Convert Type"
+        conversions:
+        - - "Likes"
+          - "NUMBER"
+          - ""
+          - ""
+        - - "UserID"
+          - "NUMBER"
+          - ""
+          - ""
+    Rewrite Table:
+      type: "rewrite-table"
+      sources:
+      - "Join"
+      parameters:
+        componentName: "Rewrite Table"
+        warehouse: "[Environment Default]"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "Curated Table"
+        orderBy:
+    Users:
+      type: "table-input"
+      parameters:
+        componentName: "Users"
+        database: "[Environment Default]"
+        schema: "[Environment Default]"
+        targetTable: "load new table Users"
+        columnNames:
+        - "Country"
+        - "id"
+        - "UserID"
+        - "UserName"
+        timeOffset:
+    Join:
+      type: "join"
+      sources:
+      - "Convert Type"
+      - "Users"
+      parameters:
+        componentName: "Join"
+        mainTable: "Convert Type"
+        mainTableAlias: "Posts"
+        joins:
+        - - "Users"
+          - "Users"
+          - "Inner"
+        joinExpressions:
+        - - "\"Posts\".\"UserID\"=\"Users\".\"UserID\""
+          - "Posts_Inner_Users"
+        columnMappings:
+        - - "Posts.Likes"
+          - "Likes"
+        - - "Posts.PostTitle"
+          - "PostTitle"
+        - - "Users.Country"
+          - "Country"
+        - - "Users.UserName"
+          - "UserName"
+design:
+  components:
+    Posts:
+      position:
+        x: -460
+        "y": 0
+      tempMetlId: 1
+    Convert Type:
+      position:
+        x: -330
+        "y": 0
+      tempMetlId: 2
+    Rewrite Table:
+      position:
+        x: 20
+        "y": 0
+      tempMetlId: 3
+    Users:
+      position:
+        x: -460
+        "y": 120
+      tempMetlId: 4
+    Join:
+      position:
+        x: -190
+        "y": 0
+      tempMetlId: 5
