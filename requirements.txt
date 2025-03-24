@@ -1,0 +1,15 @@
+black==24.1.1
+colorama==0.4.6
+packaging==23.2
+tableau-api-lib==0.1.50
+tableaudocumentapi==0.11
+tableauserverclient==0.30
+termcolor==2.4.0
+xmltodict==0.13.0
+urllib3==2.0.7
+tabulate
+openpyxl
+XlsxWriter==3.2.0
+psycopg2
+pandas
+setuptools

@@ -1,0 +1,18 @@
+
+
+
+
+<credentials>
+    <server path="https://cctableauprod.mcd.pri" pat_name="Prods" pat="naOAt0DNRc2D8KmlLfsPaw==:OMM1RJE8cDBPqpWneSnQXqbphYm7isRd" site="MedicalGroup" ssl="False" ssl_filepath="" pac_url="https://cctableauprod.mcd.pri" server_version="3.21" />
+    <cloud path="https://us-east-1.online.tableau.com/" pat_name="Cloud" pat="0/zpKd0qR8KXpFGXW4Zp5Q==:STDeKO2xymgntPUfVUfUmGhy2KoZPT5Z" site="christianacare" ssl="False" ssl_filepath="" pac_url="https://cctableauprod.mcd.pri" server_version="" />
+    <database dbname='workgroup' user='readonly' password='T8mT4b134u772' host='cctableauprod.mcd.pri' port='8060' />
+
+    <users_groups>
+        <filters enabled="True">
+            <filter value="all_users" name="all" enabled="true" />
+            <filter value="all_groups" name="all" enabled="true" />
+            <filter value="group_members" name="all" enabled="true" />
+        </filters>
+    </users_groups>
+
+</credentials>

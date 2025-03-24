@@ -1,0 +1,63 @@
+ONE TIME:
+python -m venv myenv
+pip install -r requirements.txt 
+pip install legacy-cgi
+pip install pypac
+
+Every Instance:
+myenv\Scripts\activate
+cd src
+
+DATA-SOURCE:
+
+1) py create_csv_project.py --config "H:\Users\801222514\storm"
+2) py datasource.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+py datasource.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+
+WORKBOOK:
+1) py create_csv_project.py --config "H:\Users\801222514\storm"
+2) py create_datasource_excel.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+3) py workbook.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+
+
+
+py create_user_group_excel.py --config "H:\Users\801222514\storm"
+py user_group_migrate.py --config "H:\Users\801222514\storm" --user "H:\Users\801222514\storm\src"
+
+CUSTOM VIEWS
+py workbook_cvn.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --user "H:\Users\801222514\storm\src"
+
+
+FOR CUSTOM VIEW:
+1. py create_csv_project.py --config "H:\Users\801222514\storm"
+2. py datasource.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+3. py create_datasource_excel.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+4. py create_user_group_excel.py --config "H:\Users\801222514\storm"
+5. py workbook_cvn.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --user "H:\Users\801222514\storm\src"
+# py workbook_CV_V2025M.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --user "H:\Users\801222514\storm\src"
+
+
+PERMISSIONS:
+1) py create_csv_project.py --config "H:\Users\801222514\storm"
+2) py create_user_group_excel.py --config  "H:\Users\801222514\storm"
+3) py permission.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --user "H:\Users\801222514\storm\src" --template yes
+>4) py permissionsanother.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm" --project "H:\Users\801222514\storm" --user "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --template yes --permission "H:\Users\801222514\storm\src"
+
+
+FAVS:
+1) py create_user_group_excel.py --config  "H:\Users\801222514\storm"
+2) py create_csv_project.py --config "H:\Users\801222514\storm" 
+3) py favorites.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src" --user "H:\Users\801222514\storm\src"
+
+
+Extract Refresh:
+1) py create_user_group_excel.py --config  "H:\Users\801222514\storm"
+2) py create_csv_project.py --config "H:\Users\801222514\storm" 
+3) py extractschedule.py --config "H:\Users\801222514\storm" --project "H:\Users\801222514\storm\src"
+
+
+
+
+
+
+
